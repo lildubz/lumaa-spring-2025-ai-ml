@@ -1,91 +1,94 @@
-# AI/Machine Learning Intern Challenge: Simple Content-Based Recommendation
-
-**Deadline**: Sunday, Feb 23th 11:59 pm PST
-
----
+# Lyrics-Based Song Recommendation System
 
 ## Overview
 
-Build a **content-based recommendation system** that, given a **short text description** of a user’s preferences, suggests **similar items** (e.g., movies) from a small dataset. This challenge should take about **3 hours**, so keep your solution **simple** yet **functional**.
+This Python application provides song recommendations based on lyric similarity. It uses natural language processing techniques (TF-IDF) to find songs with lyrics that match the user's description of their music preferences. Users can further refine results by applying optional filters for genre and release year.
 
-### Example Use Case
+## Features
 
-- The user inputs:  
-  *"I love thrilling action movies set in space, with a comedic twist."*  
-- Your system processes this description (query) and compares it to a dataset of items (e.g., movies with their plot summaries or keywords).  
-- You then return the **top 3–5 “closest” matches** to the user.
-
----
+- Text-based song recommendations using lyrics similarity
+- Optional filtering by genre and release year
+- Interactive command-line interface
+- Dataset size reduction for improved performance
+- Similarity score display for each recommendation
 
 ## Requirements
 
-1. **Dataset**  
-   - Use a **small** public dataset of items (e.g., a list of movies with plot summaries, or other textual descriptions).  
-   - Make sure the dataset is easy to handle (maybe 100–500 rows) so the solution remains quick to implement and run.  
-   - Include the dataset in your forked repository *or* provide instructions/link on how to download it.  
+- Python 3.6+
+- pandas
+- scikit-learn
+- numpy
 
-2. **Approach**  
-   - **Content-Based**: At a minimum, use text similarity to recommend items.  
-     - For instance, you can transform both the user’s text input and each item’s description into TF-IDF vectors and compute **cosine similarity**.  
-   - Return the **top N** similar items (e.g., top 5).
+## Installation
 
-3. **Code Organization**  
-   - You may use a **Jupyter Notebook** or **Python scripts**.  
-   - Keep it **readable** and **modular** (e.g., one section for loading data, one for building vectors, one for computing similarity, etc.).  
-   - Briefly comment or docstring your key functions/sections.
+1. Clone this repository or download the script
+2. Install the required packages:
 
-4. **Output**  
-   - When given an input description (e.g., `"I like action movies set in space"`), your system should print or return a list of recommended items (e.g., 3–5 titles).  
-   - Include the similarity score or rank if you’d like.
+```bash
+pip install pandas scikit-learn numpy
+```
 
-5. **Summary & Instructions**  
-   - A short `README.md` that includes:
-     - **Dataset**: Where it’s from, any steps to load it.  
-     - **Setup**: Python version, virtual environment instructions, and how to install dependencies (`pip install -r requirements.txt`).  
-     - **Running**: How to run your code (e.g., `python recommend.py "Some user description"` or open your notebook in Jupyter).  
-     - **Results**: A brief example of your system’s output for a sample query.
+3. Prepare your song dataset in CSV format with these required columns:
+   - `track_name`: The name of the song
+   - `artist_name`: The name of the artist
+   - `genre`: The genre of the song
+   - `release_date`: The year the song was released
+   - `lyrics`: The lyrics of the song
 
----
+## Usage
 
-## Deliverables
+1. Run the script:
 
-1. **Fork the Public Repository**  
-   - **Fork** this repo into your own GitHub account.
+```bash
+python song_recommendation.py
+```
 
-2. **Implement Your Solution**  
-   - Load and preprocess your dataset (e.g., read CSV, handle text columns).  
-   - Convert text data to vectors (e.g., TF-IDF).  
-   - Implement a function to compute similarity between the user’s query and each item’s description.  
-   - Return the top matches.
-   - Salary expectation per month (Mandatory)
+2. When prompted, provide the path to your CSV dataset file
+3. Enter your music preferences when asked
+4. Optionally, specify genre and release year filters
+5. Review the recommendations with their similarity scores
+6. Continue entering new preferences or type 'exit', 'quit', or 'done' to end the session
 
-3. **Short Video Demo**  
-   - In a `.md` file (e.g., `demo.md`) within your fork, paste a link to a **brief screen recording** (video link).  
-   - Demonstrate:
-     - How you run the recommendation code.  
-     - A sample query and the results.
+## How It Works
 
-4. **Deadline**  
-   - Submit your fork by **Sunday, Feb 23th 11:59 pm PST**.
+1. **Data Loading**: The system loads a CSV file containing song information and lyrics.
+2. **Feature Engineering**: It creates a text feature column from song lyrics.
+3. **TF-IDF Vectorization**: The lyrics are converted into numerical vectors using TF-IDF (Term Frequency-Inverse Document Frequency).
+4. **Similarity Calculation**: When a user enters their preferences, the system calculates the cosine similarity between the user input and all songs in the dataset.
+5. **Filtering**: Optional genre and year filters are applied to narrow down the results.
+6. **Recommendation**: The top N songs with the highest similarity scores are displayed.
 
-> **Note**: This should be doable within ~3 hours. Keep it **straightforward**—you do **not** need advanced neural networks or complex pipelines. A simple TF-IDF + cosine similarity approach is sufficient.
+## Sample Interaction
 
----
+```
+Please enter the file path of the dataset: /path/to/your/dataset.csv
+Dataset loaded successfully!
 
-## Evaluation Criteria
+Please describe your music preferences: upbeat songs about summer and love
+Enter a genre to filter by (or press Enter to skip): pop
+Enter a release year to filter by (or press Enter to skip): 2020
 
-1. **Functionality**  
-   - Does your code run without errors?  
-   - When given an input query, does it successfully output relevant items?
+User Input: upbeat songs about summer and love
 
-2. **Code Quality**  
-   - Clear, commented code (where it counts).  
-   - Logical steps (load data → transform → recommend).
+Recommended Songs:
 
-3. **Clarity**  
-   - Is your `README.md` straightforward about setup, how to run, and what to expect?
+Rank: 1 | Song: Summer Love | Artist: Justin Timberlake | Genre: pop | Year: 2020 
+Rank: 2 | Song: Hot Summer Nights | Artist: Miami Sound Machine | Genre: pop | Year: 2020 
+...
+```
 
-4. **ML/Recommendation Understanding**  
-   - Basic implementation of a content-based recommendation approach (vectorization, similarity measure).
+## Limitations
 
-**We look forward to seeing your solution!** Good luck!
+- The quality of recommendations depends on the availability and quality of lyrics in the dataset
+- Large datasets may require significant processing time
+- The system uses only lyrics for similarity and doesn't consider audio features
+- The dataset is reduced to 500 entries for performance optimization
+
+## Future Improvements
+
+- Implement audio feature-based recommendations
+- Add support for more complex filtering options
+- Create a web or GUI interface
+- Optimize for larger datasets
+- Add support for collaborative filtering
+
